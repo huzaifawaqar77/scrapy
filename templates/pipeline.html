@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NexTech | Live Pipeline Runner</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Background Elements -->
+    <div
+      class="glow-orb top-left"
+      style="background: radial-gradient(circle, #f43f5e 0%, transparent 70%)"
+    ></div>
+    <div
+      class="glow-orb bottom-right"
+      style="
+        background: radial-gradient(circle, #a855f7 0%, transparent 70%);
+        opacity: 0.1;
+      "
+    ></div>
+
+    <header class="glass-header">
+      <div class="nav-container">
+        <div class="logo">
+          <div class="logo-icon"><i class="ri-radar-line"></i></div>
+          <span>NexTech Engine</span>
+        </div>
+        <nav>
+          <a href="{{ url_for('index') }}">Jobs</a>
+          <a href="{{ url_for('pipeline') }}" class="active">Live Pipeline</a>
+          <a href="#">Companies</a>
+        </nav>
+        <div class="auth-buttons">
+          <button class="btn-secondary">For Employers</button>
+          <button class="btn-primary">Post a Job</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero-section" style="margin-bottom: 3rem">
+        <div
+          class="badge"
+          style="
+            color: #f43f5e;
+            border-color: rgba(244, 63, 94, 0.2);
+            background: rgba(244, 63, 94, 0.1);
+          "
+        >
+          <i class="ri-pulse-line"></i> Distributed Pipeline
+        </div>
+        <h1>
+          Initialize Data
+          <span
+            class="gradient-text"
+            style="
+              background: linear-gradient(135deg, #f43f5e, #a855f7);
+              -webkit-background-clip: text;
+            "
+            >Extraction</span
+          >
+        </h1>
+        <p>
+          Execute real-time scraping architecture. Watch as items are parsed,
+          deduplicated, and inserted into the SQLAlchemy ORM in real time.
+        </p>
+
+        <div class="pipeline-controls" style="margin-top: 2rem">
+          <button
+            id="startPipelineBtn"
+            class="btn-primary"
+            style="background: #f43f5e; font-size: 1.1rem; padding: 1rem 3rem"
+          >
+            <i class="ri-play-fill" style="margin-right: 8px"></i> Trigger Crawl
+            Event
+          </button>
+          <button id="clearLogBtn" class="btn-secondary">Clear Logs</button>
+        </div>
+      </section>
+
+      <section class="terminal-section">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="terminal-title">server@cluster01: ~/job_scraper</div>
+          </div>
+          <div class="terminal-body" id="terminalOutput">
+            <div class="log-line info">
+              <span class="prompt">$</span> Pipeline Agent standing by. Awaiting
+              trigger sequence...
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="logo">
+          <div class="logo-icon"><i class="ri-radar-line"></i></div>
+          <span>NexTech Engine</span>
+        </div>
+        <p>&copy; 2026 NexTech Aggregator. Built with Scrapy & SQLAlchemy.</p>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/pipeline.js') }}"></script>
+  </body>
+</html>

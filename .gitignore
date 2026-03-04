@@ -1,0 +1,23 @@
+# Python & Virtual Environment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment variables
+.env
+.env.local
+
+# Scrapy specific
+*.log
+.scrapy/
+
+# Scraping test outputs
+wwr.html
+test_parse.py
+content.txt
+
+# OS generated files
+.DS_Store
+Thumbs.db
