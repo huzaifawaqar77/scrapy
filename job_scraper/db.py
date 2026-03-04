@@ -4,24 +4,33 @@ from sqlalchemy.orm import sessionmaker
 import datetime
 import os
 import mysql.connector
+from urllib.parse import urlparse, unquote
 
-# Ensure the database exists (Specific to local XAMPP setup)
+# Ensure the database exists (Works for both local and production)
 def create_database_if_not_exists():
     try:
-        # Check if we are running with a production Database URI, if so skip creation
-        if os.getenv("DATABASE_URI"):
-            return
-            
+        db_uri = os.getenv("DATABASE_URI", "mysql+mysqlconnector://root:@localhost:3306/job_board_db")
+        
+        # Parse the URI to get host, user, password, port, and db name
+        parsed = urlparse(db_uri)
+        db_user = unquote(parsed.username) if parsed.username else "root"
+        db_pass = unquote(parsed.password) if parsed.password else ""
+        db_host = parsed.hostname or "localhost"
+        db_port = parsed.port or 3306
+        db_name = parsed.path.lstrip('/') or "job_board_db"
+
+        # Connect to MySQL server (without specifying the database) to create it if missing
         conn = mysql.connector.connect(
-            host=os.getenv("DB_HOST", "localhost"),
-            user=os.getenv("DB_USER", "root"),
-            password=os.getenv("DB_PASS", "")
+            host=db_host,
+            user=db_user,
+            password=db_pass,
+            port=db_port
         )
         cursor = conn.cursor()
-        cursor.execute("CREATE DATABASE IF NOT EXISTS job_board_db")
+        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {db_name}")
         cursor.close()
         conn.close()
-        print("Database 'job_board_db' ensured.")
+        print(f"Database '{db_name}' ensured on {db_host}:{db_port}.")
     except Exception as e:
         print(f"Error creating database: {e}")
 
@@ -30,7 +39,7 @@ create_database_if_not_exists()
 
 # Enterprise Grade ORM setup using SQLAlchemy
 # Defaults to localhost XAMPP but overrides if deployed on Coolify
-DATABASE_URI = os.getenv("DATABASE_URI", "mysql+mysqlconnector://root:@localhost/job_board_db")
+DATABASE_URI = os.getenv("DATABASE_URI", "mysql+mysqlconnector://root:@localhost:3306/job_board_db")
 
 engine = create_engine(DATABASE_URI, echo=False)
 Base = declarative_base()
